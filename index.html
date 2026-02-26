@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Antigravity - Arena Shooter</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div id="ui-container">
+        <div id="crosshair"></div>
+        <div id="ammo-count">20 / 100</div>
+        <div id="health-bar">
+            <div id="health-fill"></div>
+        </div>
+        <div id="weapon-info">Pistola</div>
+        <div id="instructions">
+            <h1>ANTIGRAVITY</h1>
+            <p>Clique para Iniciar</p>
+            <p>(WASD) Movimentar | (ESPAÇO) Pulo Alto | (LMB) Atirar</p>
+            <p>(1, 2, 3) Trocar Armas</p>
+        </div>
+    </div>
+
+    <!-- Scripts via ESM CDN -->
+    <script type="importmap">
+        {
+            "imports": {
+                "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+                "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
+            }
+        }
+    </script>
+    <script type="module" src="main.js"></script>
+</body>
+</html>

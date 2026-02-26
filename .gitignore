@@ -1,0 +1,9 @@
+# Standard ignore for web projects
+node_modules/
+dist/
+build/
+.DS_Store
+*.log
+.env
+.idea/
+.vscode/
