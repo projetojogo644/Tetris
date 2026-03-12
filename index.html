@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SHOOTS - Arena Shooter</title>
+    <title>SHOTS - Arena Shooter</title>
     <link rel="stylesheet" href="style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -11,8 +11,19 @@
 </head>
 <body>
     <div id="damage-overlay"></div>
+    <div id="scope-overlay">
+        <div class="scope-line-v"></div>
+        <div class="scope-line-h"></div>
+        <div id="scope-center"></div>
+    </div>
     <div id="ui-container">
-        <div id="crosshair"></div>
+        <div id="crosshair">
+            <div id="crosshair-top"></div>
+            <div id="crosshair-bottom"></div>
+            <div id="crosshair-left"></div>
+            <div id="crosshair-right"></div>
+        </div>
+        <div id="pickup-prompt"></div>
         <div id="kills-count">Kills: 0</div>
         <div id="ammo-count">12 / 12</div>
         <div id="health-bar">
@@ -20,13 +31,15 @@
         </div>
         <div id="weapon-info">Pistola</div>
         <div id="instructions">
-            <h1>SHOOTS</h1>
+            <h1>SHOTS</h1>
             <p>Clique para Iniciar</p>
             <p>(WASD) Movimentar | (ESPAÇO) Pular | (LMB) Atirar</p>
-            <p>(1) Pistola | (2) SMG | (3) Sniper | (4) Faca 🔪</p>
-            <p>(R) Recarregar</p>
-            <p style="color: #ffaa00; margin-top: 0.5rem;">🔪 Faca = +50% Velocidade!</p>
-            <p style="color: #ff5555; font-size: 0.9rem; margin-top: 0.5rem;">Elimine os bots inimigos!</p>
+            <p>(1-5) Armas | (R) Recarregar | (E) Usar/Pegar</p>
+            <p>(C / Ctrl) Agachar | (Shift) DASH/Slide</p>
+            <p>(RMB) Mira | (LMB) Atirar</p>
+            <p style="color: #ffaa00; margin-top: 0.5rem;">🔥 Gameplay Tático: Muzzle Flash, Balanço e Sons de Passos!</p>
+            <p style="color: #00d2ff; font-size: 0.9rem; margin-top: 0.3rem;">🎯 Precisão Dinâmica: Fique parado ou agachado para melhor mira!</p>
+            <p style="color: #ff5555; font-size: 0.9rem; margin-top: 0.3rem;">⚡ Use o DASH (Shift) para esquivar rapidamente!</p>
         </div>
     </div>
 
@@ -38,6 +51,6 @@
             }
         }
     </script>
-    <script type="module" src="main.js?v=4"></script>
+    <script type="module" src="main.js?v=8"></script>
 </body>
 </html>
