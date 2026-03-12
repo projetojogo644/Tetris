@@ -1309,45 +1309,36 @@ function fire() {
     
     raycaster.set(camera.position, target);
 
-    // Filter bots
-    const botMeshParts = [];
-    bots.filter(b => b.alive).forEach(b => {
-        b.mesh.traverse(child => { if (child.isMesh) botMeshParts.push({ mesh: child, bot: b }); });
-    });
-
-    const allBotMeshes = botMeshParts.map(bp => bp.mesh);
+    // Filter potential targets (scene children excludes player UI/weapon)
+    const intersects = raycaster.intersectObjects(scene.children, true);
     
-    // Check world collision first
-    const worldIntersects = raycaster.intersectObjects(scene.children, true);
-    let firstWorldHit = null;
-    for (const hit of worldIntersects) {
-        // Skip certain objects if needed, but normally check all geometry
-        if (hit.object.type === 'Mesh') {
-            firstWorldHit = hit;
-            break;
-        }
-    }
+    for (const hit of intersects) {
+        // Skip detection rings and invisible objects
+        if (hit.object.name === 'detectionRing' || !hit.object.visible) continue;
 
-    // Check bot hits
-    const botIntersects = raycaster.intersectObjects(allBotMeshes, false);
-    
-    if (botIntersects.length > 0) {
-        const botHit = botIntersects[0];
-        // If world hit is closer than bot hit, it's a wall hit
-        if (firstWorldHit && firstWorldHit.distance < botHit.distance) {
-            createImpact(firstWorldHit.point, currentWeapon.color);
-        } else {
-            const hitObj = botHit.object;
-            createImpact(botHit.point, currentWeapon.color);
-            for (const bp of botMeshParts) {
-                if (bp.mesh === hitObj) {
-                    damageBot(bp.bot, currentWeapon.damage);
-                    break;
-                }
+        // Check if it's a bot part
+        let botFound = null;
+        let iter = hit.object;
+        while (iter) {
+            const b = bots.find(bot => bot.mesh === iter);
+            if (b) {
+                botFound = b;
+                break;
             }
+            iter = iter.parent;
         }
-    } else if (firstWorldHit) {
-        createImpact(firstWorldHit.point, currentWeapon.color);
+
+        const normal = hit.face ? hit.face.normal.clone().applyQuaternion(hit.object.quaternion) : target.clone().negate();
+
+        if (botFound && botFound.alive) {
+            damageBot(botFound, currentWeapon.damage);
+            createImpact(hit.point, normal);
+            break; // Ray stopped
+        } else if (hit.object.type === 'Mesh') {
+            // Hit world geometry
+            createImpact(hit.point, normal);
+            break; // Ray stopped
+        }
     }
 }
 
